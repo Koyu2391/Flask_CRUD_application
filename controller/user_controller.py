@@ -24,7 +24,7 @@ def delete(id):
 # Additional Feature For user login 
 @app.route('/log_in', methods = ["POST"])
 def user_login():
-    return MyUser.login_l(request.get_json())
+    return obj.login_l(request.get_json())
 
 
 # for update 
