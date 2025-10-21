@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GeekyMacet - Student Portal</title>
+    <meta name="description" content="GeekyMacet - A modern student portal for managing academic life">
+    <link rel="stylesheet" href="../static/styles.css">
+</head>
+<body>
+    <div class="container">
+        <div class="hero-section">
+            <div class="icon-wrapper icon-large">
+                <svg class="icon-xl" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M22 10v6M2 10l10-5 10 5-10 5z"/>
+                    <path d="M6 12v5c3 3 9 3 12 0v-5"/>
+                </svg>
+            </div>
+            
+            <div class="hero-content">
+                <h1 class="hero-title">
+                    Welcome to <span class="text-primary">GeekyMacet</span>
+                </h1>
+                <p class="hero-description">
+                    Your all-in-one student portal for managing academic life, connecting with peers, and achieving excellence.
+                </p>
+            </div>
+
+            <div class="button-group">
+                <button class="btn btn-primary btn-lg" onclick="location.href='signup.html'">
+                    Get Started
+                    <svg class="icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M5 12h14M12 5l7 7-7 7"/>
+                    </svg>
+                </button>
+                <button class="btn btn-outline btn-lg" onclick="location.href='login.html'">
+                    Login
+                </button>
+            </div>
+
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="icon-wrapper icon-primary">
+                        <svg class="icon-md" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+                            <circle cx="9" cy="7" r="4"/>
+                            <path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/>
+                        </svg>
+                    </div>
+                    <h3 class="feature-title">Connect</h3>
+                    <p class="feature-description">
+                        Join a vibrant community of students and collaborate on projects
+                    </p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="icon-wrapper icon-secondary">
+                        <svg class="icon-md" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/>
+                            <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>
+                        </svg>
+                    </div>
+                    <h3 class="feature-title">Learn</h3>
+                    <p class="feature-description">
+                        Access resources, track progress, and enhance your skills
+                    </p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="icon-wrapper icon-accent">
+                        <svg class="icon-md" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="8" r="7"/>
+                            <polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"/>
+                        </svg>
+                    </div>
+                    <h3 class="feature-title">Achieve</h3>
+                    <p class="feature-description">
+                        Set goals, monitor performance, and celebrate success
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="toast" class="toast"></div>
+    <script src="../static/app.js"></script>
+</body>
+</html>
