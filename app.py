@@ -8,7 +8,6 @@ CORS(app)
 from controller.user_controller import user_blueprint
 app.register_blueprint(user_blueprint)
 
-
 @app.route("/")
 def home():
     return render_template("index.html")
