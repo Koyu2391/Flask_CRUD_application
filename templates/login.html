@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - GeekyMacet</title>
+    <meta name="description" content="Login to your GeekyMacet student portal">
+    <link rel="stylesheet" href="../static/styles.css">
+</head>
+<body>
+    <div class="auth-container">
+        <div class="card">
+            <div class="card-header">
+                <div class="icon-wrapper icon-large">
+                    <svg class="icon-xl" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M22 10v6M2 10l10-5 10 5-10 5z"/>
+                        <path d="M6 12v5c3 3 9 3 12 0v-5"/>
+                    </svg>
+                </div>
+                <h1 class="card-title">Welcome to GeekyMacet</h1>
+                <p class="card-description">Login to access your student portal</p>
+            </div>
+            
+            <div class="card-content">
+                <form id="loginForm" class="form">
+                    <div class="form-group">
+                        <label for="email" class="form-label">Email</label>
+                        <input 
+                            type="email" 
+                            id="email" 
+                            class="form-input" 
+                            placeholder="student@geekymacet.edu"
+                            required
+                        >
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="password" class="form-label">Password</label>
+                        <input 
+                            type="password" 
+                            id="password" 
+                            class="form-input" 
+                            placeholder="Enter your password"
+                            required
+                        >
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary btn-block btn-lg">
+                        Login
+                    </button>
+                    
+                    <button type="button" class="btn btn-outline btn-block btn-lg" onclick="location.href='signup.html'">
+                        Go to Signup
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div id="toast" class="toast"></div>
+    <script src="../static/app.js"></script>
+<script>
+document.getElementById('loginForm').addEventListener('submit', async function(e) {
+    e.preventDefault();
+
+    const email = document.getElementById('email').value;
+    const password = document.getElementById('password').value;
+
+    try {
+        const response = await fetch('http://localhost:5000/log_in', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                email: email,
+                pass: password
+            })
+        });
+
+        const data = await response.json();
+
+        if (response.status === 200) {
+            // Store the entire user data returned by backend
+            localStorage.setItem('geekyMacetUser', JSON.stringify(data.user));
+            localStorage.setItem('geekyMacetLoggedIn', 'true');
+
+            showToast('Welcome back to GeekyMacet!', 'success');
+            setTimeout(() => {
+                window.location.href = 'profile.html';
+            }, 1000);
+        } else {
+            showToast(data.message || 'Invalid email or password', 'error');
+        }
+    } catch (error) {
+        showToast('Something went wrong: ' + error.message, 'error');
+    }
+});
+</script>
+</body>
+</html>
