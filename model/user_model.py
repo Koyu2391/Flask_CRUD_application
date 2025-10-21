@@ -7,9 +7,13 @@ from .user_delete import delete_user
 
 class user_model:
     def __init__(self):
-        self.db_name = "user.db"
-        self._create_table()  # -> Remove ORM -> (Assigned to @herenamescode)
-
+        try:
+            self.con = sqlite3.connect("geeky_macet.db", check_same_thread=False)
+            self.con.row_factory = sqlite3.Row
+            self.cur = self.con.cursor()
+            print("Sql Connection Estd")
+        except Exception as e:
+            print(f"Some Error Occured {e}")
     # Fahad's Side of the work Includes -> (Create and Delete)
 
     def create_c(self, data):
