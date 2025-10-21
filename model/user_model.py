@@ -22,7 +22,7 @@ class user_model:
     def delete_d(self, id):
         return delete_user(self.cur, self.con, id)
 
-    def login_l(self, data):
+    def login_l(self, data): # Extra Login Feature 
         return login_user(self.cur, self.con, data)
 
     # End of the specified Work
