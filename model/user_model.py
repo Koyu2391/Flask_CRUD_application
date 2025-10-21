@@ -13,7 +13,11 @@ class user_model:
             CREATE TABLE IF NOT EXISTS user (
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
                 name TEXT NOT NULL,
-                email TEXT NOT NULL
+                email TEXT NOT NULL UNIQUE,
+                pass TEXT NOT NULL, 
+                roll_batch NOT NULL,
+                branch NOT NULL
+                
             )
         """)
         con.commit()
