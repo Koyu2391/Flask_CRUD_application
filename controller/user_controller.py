@@ -9,22 +9,22 @@ obj = user_model()
 def user_getall_controller():
     return obj.user_getall_model()
 
-# for create 
-@user_blueprint.route("/user/addone", methods=["POST"])
-def user_addone_controller():
-    name = request.form.get("name")
-    email = request.form.get("email")
+#  for create 
+# @user_blueprint.route("/user/addone", methods=["POST"])
+# def user_addone_controller():
+#     name = request.form.get("name")
+#     email = request.form.get("email")
 
-    print("Received name:", name)
-    print("Received email:", email)
-    if not name or not email:
-        return jsonify({"error": "Missing name or email"}), 400
+#     print("Received name:", name)
+#     print("Received email:", email)
+#     if not name or not email:
+#         return jsonify({"error": "Missing name or email"}), 400
 
-    success = obj.user_addone_model(name, email)
-    if success:
-        return jsonify({"message": "User added successfully!"}), 201
-    else:
-        return jsonify({"error": "Failed to add user"}), 500
+#     success = obj.user_addone_model(name, email)
+#     if success:
+#         return jsonify({"message": "User added successfully!"}), 201
+#     else:
+#         return jsonify({"error": "Failed to add user"}), 500
 
 
 # for update 
@@ -33,22 +33,25 @@ def user_update_controller():
     user_id = request.form.get("id")
     name = request.form.get("name")
     email = request.form.get("email")
+    password = request.form.get("password")
+    roll_batch = request.form.get("roll_batch")
+    branch = request.form.get("branch") 
 
     print("Form data:", request.form.to_dict())
 
-    if not user_id or not name or not email:
-        return jsonify({"error": "Missing id, name, or email"}), 400
-
+    if not user_id or not name or not email or not password or not roll_batch:
+        return jsonify({"error": "Missing id, name, email, password, or roll_batch"}), 400
+    
     data = {
         "id": user_id,
         "name": name,
-        "email": email
+        "email": email,
+        "password": password,
+        "roll_batch": roll_batch,
+        "branch": branch  
     }
 
     return obj.user_update_model(data)
 
 
-
-
-    
 
