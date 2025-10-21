@@ -4,24 +4,10 @@ from flask import jsonify, make_response
 class user_model:
     def __init__(self):
         self.db_name = "user.db"
-        self._create_table()
+        self._create_table() # -> Remove ORM 
 
     def _create_table(self):
-        con = sqlite3.connect(self.db_name)
-        cur = con.cursor()
-        cur.execute("DROP TABLE IF EXISTS user") 
-        cur.execute("""
-            CREATE TABLE IF NOT EXISTS user (
-                id INTEGER PRIMARY KEY AUTOINCREMENT,
-                name TEXT NOT NULL,
-                email TEXT NOT NULL UNIQUE,
-                password TEXT NOT NULL,
-                roll_batch TEXT,
-                branch TEXT
-            )
-        """)
-        con.commit()
-        con.close()
+        # Create -> Fahad
 
     # READ
     def user_getall_model(self):
@@ -56,4 +42,5 @@ class user_model:
             print("Update error:", e)
             traceback.print_exc()
             return make_response({"message": "UPDATE_FAILED", "error": str(e)}, 500)
-    
+        
+        
