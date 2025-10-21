@@ -6,6 +6,12 @@
 /e2e/test-output/
 /.angular/
 .angular/
+/venv
+venv/
+.env
+.vscode/
+.idea/
+geeky_macet.db
 
 # Node modules and dependency files
 /node_modules/
