@@ -25,6 +25,10 @@ def user_log():
 def user_sig():
     return render_template("signup.html")
 
+@app.route('/fetch')
+def display():
+    return render_template("view.html")
+
 
 from model.user_create import create_user
 from model.user_delete import delete_user

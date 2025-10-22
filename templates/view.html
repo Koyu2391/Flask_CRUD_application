@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Directory - CSE Department</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 50%, #3b82f6 100%);
+            min-height: 100vh;
+            padding: 3rem 1rem;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 3rem;
+            animation: fadeIn 0.8s ease-out;
+        }
+
+        .icon-container {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 64px;
+            height: 64px;
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            border-radius: 1rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+        }
+
+        .icon {
+            width: 32px;
+            height: 32px;
+            stroke: white;
+            stroke-width: 2;
+            fill: none;
+        }
+
+        h1 {
+            color: white;
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            text-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .subtitle {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 1.25rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 0.5rem 1rem;
+            border-radius: 9999px;
+            color: white;
+            font-size: 0.875rem;
+            font-weight: 500;
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            background: #4ade80;
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+
+        .loading {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 400px;
+            color: white;
+            font-size: 1.25rem;
+        }
+
+        .spinner {
+            width: 48px;
+            height: 48px;
+            border: 4px solid rgba(255, 255, 255, 0.3);
+            border-top-color: white;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-bottom: 1rem;
+        }
+
+        .error {
+            background: rgba(239, 68, 68, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(239, 68, 68, 0.3);
+            color: white;
+            padding: 1rem 1.5rem;
+            border-radius: 0.75rem;
+            margin-bottom: 2rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 1rem;
+            overflow: hidden;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            opacity: 0;
+            animation: fadeInUp 0.6s ease-out forwards;
+        }
+
+        .card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+        }
+
+        .card-header {
+            background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+            padding: 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .card-title {
+            color: white;
+            font-size: 1.25rem;
+            font-weight: 700;
+        }
+
+        .badge {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 0.375rem;
+            font-size: 0.75rem;
+            font-weight: 600;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .card-content {
+            padding: 1.5rem;
+        }
+
+        .info-row {
+            display: flex;
+            gap: 0.75rem;
+            margin-bottom: 1rem;
+        }
+
+        .info-row:last-child {
+            margin-bottom: 0;
+        }
+
+        .info-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            margin-top: 8px;
+            flex-shrink: 0;
+        }
+
+        .dot-primary {
+            background: #3b82f6;
+        }
+
+        .dot-accent {
+            background: #8b5cf6;
+        }
+
+        .info-content {
+            flex: 1;
+        }
+
+        .info-label {
+            color: #6b7280;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 0.25rem;
+        }
+
+        .info-value {
+            color: #1f2937;
+            font-size: 0.875rem;
+            font-weight: 500;
+            word-break: break-all;
+        }
+
+        .branch-badge {
+            background: #f3f4f6;
+            color: #1f2937;
+            padding: 0.25rem 0.75rem;
+            border-radius: 0.375rem;
+            font-size: 0.875rem;
+            font-weight: 500;
+            display: inline-block;
+            margin-top: 0.25rem;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 3rem 1rem;
+            color: white;
+        }
+
+        .empty-icon {
+            width: 80px;
+            height: 80px;
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1rem;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                opacity: 1;
+            }
+            50% {
+                opacity: 0.5;
+            }
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2rem;
+            }
+
+            .subtitle {
+                font-size: 1rem;
+            }
+
+            .grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="icon-container">
+                <svg class="icon" viewBox="0 0 24 24">
+                    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                    <circle cx="9" cy="7" r="4"></circle>
+                    <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                    <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                </svg>
+            </div>
+            <h1>Student Directory</h1>
+            <p class="subtitle">Computer Science & Engineering Department</p>
+            <div class="status-badge">
+                <div class="status-dot"></div>
+                <span id="student-count">Loading...</span>
+            </div>
+        </div>
+
+        <div id="error-container"></div>
+        <div id="loading" class="loading">
+            <div style="text-align: center;">
+                <div class="spinner"></div>
+                <p>Loading students...</p>
+            </div>
+        </div>
+        <div id="students-grid" class="grid"></div>
+    </div>
+<script>
+    const API_URL = 'http://localhost:5000/user/getall'; // ✅ fixed typo
+
+    async function fetchStudents() {
+        const loading = document.getElementById('loading');
+        const errorContainer = document.getElementById('error-container');
+
+        try {
+            loading.style.display = 'block';
+            errorContainer.innerHTML = '';
+
+            const response = await fetch(API_URL);
+
+            if (!response.ok) {
+                const errData = await response.json();
+                throw new Error(errData.message || 'Failed to fetch students');
+            }
+
+            const data = await response.json();
+            const students = data.database || [];
+            displayStudents(students);
+
+        } catch (error) {
+            showError(error.message);
+        } finally {
+            loading.style.display = 'none';
+        }
+    }
+
+    function showError(message) {
+        const errorContainer = document.getElementById('error-container');
+        errorContainer.innerHTML = `
+            <div class="error">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <line x1="12" y1="8" x2="12" y2="12"></line>
+                    <line x1="12" y1="16" x2="12.01" y2="16"></line>
+                </svg>
+                <span>${message}</span>
+            </div>
+        `;
+    }
+
+    function displayStudents(students) {
+        const grid = document.getElementById('students-grid');
+        const countElement = document.getElementById('student-count');
+        
+        countElement.textContent = `${students.length} Students Enrolled`;
+
+        if (students.length === 0) {
+            grid.innerHTML = `
+                <div class="empty-state" style="grid-column: 1 / -1;">
+                    <div class="empty-icon">
+                        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+                            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                            <circle cx="9" cy="7" r="4"></circle>
+                            <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                            <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                        </svg>
+                    </div>
+                    <p style="font-size: 1.125rem;">No students found</p>
+                </div>
+            `;
+            return;
+        }
+
+        grid.innerHTML = students.map((student, index) => `
+            <div class="card" style="animation-delay: ${index * 100}ms;">
+                <div class="card-header">
+                    <h2 class="card-title">${student.name}</h2>
+                    <span class="badge">ID: ${student.id}</span>
+                </div>
+                <div class="card-content">
+                    <div class="info-row">
+                        <div class="info-dot dot-primary"></div>
+                        <div class="info-content">
+                            <div class="info-label">Email</div>
+                            <div class="info-value">${student.email}</div>
+                        </div>
+                    </div>
+                    <div class="info-row">
+                        <div class="info-dot dot-accent"></div>
+                        <div class="info-content">
+                            <div class="info-label">Roll / Batch</div>
+                            <div class="info-value">${student.roll_batch}</div>
+                        </div>
+                    </div>
+                    <div class="info-row">
+                        <div class="info-dot dot-primary"></div>
+                        <div class="info-content">
+                            <div class="info-label">Branch</div>
+                            <span class="branch-badge">${student.branch}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `).join('');
+    }
+
+    // Fetch students on page load
+    fetchStudents();
+</script>
+
+</body>
+</html>
