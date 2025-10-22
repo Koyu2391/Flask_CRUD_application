@@ -236,7 +236,7 @@
                 }
 
                 try {
-                    const response = await fetch(`http://localhost:5000/update/user/${storedUser.id}`, {
+                    const response = await fetch(`http://localhost:5000/user/update/${storedUser.id}`, {
                         method: 'PUT',
                         headers: {
                             'Content-Type': 'application/json'
