@@ -13,12 +13,14 @@ def create():
 # for read -> nameera 
 @user_blueprint.route("/user/getall", methods=["GET"])
 def user_getall_controller():
-    return obj.user_getall_model()
+    data = request.json
+    return obj.read_r(data)
 
 #for update -> nameera 
 @user_blueprint.route("/user/update", methods=["PUT"])
 def user_update_controller():
-    return obj.user_update_model()
+    data = request.json
+    return obj.update_u(data)
 
 #for Delete -> Fahad   
 @app.route("/delete_user/<id>", methods=["DELETE"])
