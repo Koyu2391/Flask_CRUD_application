@@ -28,8 +28,8 @@ class user_model:
     # End of the specified Work
 
     # READ
-    def user_getall_model(self):
-        con = sqlite3.connect(self.db_name)
+    def user_getall_model(self): # Define this functions in a separate file
+        con = sqlite3.connect(self.db_name) # No need, con and cur defined in __init__
         cur = con.cursor()
         cur.execute("SELECT * FROM user")
         result = cur.fetchall()
@@ -41,10 +41,10 @@ class user_model:
             return jsonify({"message": "No data found"}), 404
 
     # UPDATE
-    def user_update_model(self, data):
-        con = sqlite3.connect(self.db_name)
+    def user_update_model(self, data): # Define this functions in a separate file
+        con = sqlite3.connect(self.db_name) # No need, con and cur defined in __init__
         cur = con.cursor()
-        try:
+        try: # Write a Dynamic Update Query
             cur.execute(
                 "UPDATE user SET name=?, email=?, password=?, roll_batch=?, branch=? WHERE id=?",
                 (
