@@ -26,6 +26,7 @@
                 </p>
             </div>
 
+            <!-- ✅ Button Section -->
             <div class="button-group">
                 <button class="btn btn-primary btn-lg" onclick="location.href='signup.html'">
                     Get Started
@@ -33,11 +34,21 @@
                         <path d="M5 12h14M12 5l7 7-7 7"/>
                     </svg>
                 </button>
+
                 <button class="btn btn-outline btn-lg" onclick="location.href='login.html'">
                     Login
                 </button>
+
+                <!-- ✅ New 'View Members' Button -->
+                <button class="btn btn-primary btn-lg" onclick="viewMembers()">
+                    View Members
+                    <svg class="icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M5 12h14M12 5l7 7-7 7"/>
+                    </svg>
+                </button>
             </div>
 
+            <!-- ✅ Features Section -->
             <div class="features-grid">
                 <div class="feature-card">
                     <div class="icon-wrapper icon-primary">
@@ -82,7 +93,38 @@
         </div>
     </div>
 
+    <!-- ✅ Toast Element -->
     <div id="toast" class="toast"></div>
+
+    <!-- ✅ Script Section -->
+    <script>
+        async function viewMembers() {
+            try {
+                const response = await fetch('http://127.0.0.1:5000/fetch');
+                if (!response.ok) throw new Error('Failed to fetch members page');
+                
+                const html = await response.text();
+                
+                // Open the fetched HTML in a new tab
+                const newWindow = window.open('', '_blank');
+                newWindow.document.open();
+                newWindow.document.write(html);
+                newWindow.document.close();
+                
+                showToast("✅ Members page loaded successfully!");
+            } catch (error) {
+                showToast(`❌ ${error.message}`);
+            }
+        }
+
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            toast.textContent = message;
+            toast.classList.add('show');
+            setTimeout(() => toast.classList.remove('show'), 3000);
+        }
+    </script>
+
     <script src="../static/app.js"></script>
 </body>
 </html>
