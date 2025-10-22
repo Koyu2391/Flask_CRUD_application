@@ -16,9 +16,9 @@ def user_getall_controller():
     return obj.user_getall_model()
 
 #for update -> nameera 
-@app.route("/user/update", methods=["PUT"])
+@app.route("/user/update/<id>", methods=["PUT"])
 def user_update_controller():
-    return obj.user_update_model()
+    return obj.user_update_model(id)
 
 #for Delete -> Fahad   
 @app.route("/delete_user/<id>", methods=["DELETE"])

@@ -22,6 +22,11 @@ def user_log():
 def user_sig():
     return render_template("signup.html")
 
+from model.user_create import create_user
+from model.user_delete import delete_user
+from model.user_login import login_user
+from controller import user_controller
+
 if __name__ == '__main__':
     app.run(debug=True)
 

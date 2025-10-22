@@ -41,12 +41,12 @@ class user_model:
             return jsonify({"message": "No data found"}), 404
 
     # UPDATE
-    def user_update_model(self, data): # Define this functions in a separate file
+    def user_update_model(self, data, id): # Define this functions in a separate file
         con = sqlite3.connect(self.db_name) # No need, con and cur defined in __init__
         cur = con.cursor()
         try: # Write a Dynamic Update Query
             cur.execute(
-                "UPDATE user SET name=?, email=?, password=?, roll_batch=?, branch=? WHERE id=?",
+                f"UPDATE user SET name=?, email=?, password=?, roll_batch=?, branch=? WHERE id={id}",
                 (
                     data["name"],
                     data["email"],
