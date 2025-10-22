@@ -1,11 +1,11 @@
 from flask import make_response
 import sqlite3
     
-def update_user(con, data, id):
+def update_user(con, data):
         cur = con.cursor()
         try:
             cur.execute(
-                f"UPDATE user SET name=?, email=?, password=?, roll_batch=?, branch=? WHERE id={id}",
+                "UPDATE user SET name=?, email=?, password=?, roll_batch=?, branch=? WHERE id=?",
                 (
                     data["name"],
                     data["email"],
@@ -22,4 +22,5 @@ def update_user(con, data, id):
             else:
                 return make_response({"message": "NOTHING_TO_UPDATE"}, 204)
         except Exception as e:
-            return make_response({"message": "UPDATE_FAILED", "error": str(e)}, 500)
+             return make_response({"message": "UPDATE_FAILED", "error": str(e)}, 500)
+          
