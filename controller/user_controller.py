@@ -1,8 +1,8 @@
-from flask import Blueprint, request, jsonify
+from flask import request, jsonify
 from model.user_model import user_model
 from app import app
 
-user_blueprint = Blueprint("user_blueprint", __name__)
+
 obj = user_model()
 
 # for Create -> fahad
@@ -11,16 +11,15 @@ def create():
     return obj.create_c(request.get_json())
 
 # for read -> nameera 
-@user_blueprint.route("/user/getall", methods=["GET"])
+@app.route("/user/getall", methods=["GET"])
 def user_getall_controller():
     data = request.json
     return obj.read_r(data)
 
 #for update -> nameera 
-@user_blueprint.route("/user/update", methods=["PUT"])
+@app.route("/user/update/<id>", methods=["PUT"])
 def user_update_controller():
-    data = request.json
-    return obj.update_u(data)
+    return obj.user_update_model()
 
 #for Delete -> Fahad   
 @app.route("/delete_user/<id>", methods=["DELETE"])

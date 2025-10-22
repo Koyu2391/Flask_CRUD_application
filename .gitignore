@@ -12,6 +12,8 @@ venv/
 .vscode/
 .idea/
 geeky_macet.db
+.vs/
+
 
 # Node modules and dependency files
 /node_modules/
