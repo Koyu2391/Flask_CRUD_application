@@ -36,6 +36,6 @@ class user_model:
         return read_user(self.db_name)
 
     # UPDATE
-    def update(self):
-        return update_user(self.db_name)    
+    def update(self, id, data):
+        return update_user(self.cur, self.con, data, id)    
 
