@@ -17,8 +17,9 @@ def user_getall_controller():
 
 
 @app.route("/user/update/<id>", methods=["PUT"])
-def user_update_controller():
-    return obj.user_update_model()
+def user_update_controller(id):
+    return obj.update(id, request.get_json())
+
 
 @app.route("/delete_user/<id>", methods=["DELETE"])
 def delete(id):
